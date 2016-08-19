@@ -8,10 +8,11 @@
 	</parent>
 	<artifactId>currency-ee-db</artifactId>
 	<packaging>war</packaging>
-	<version>0.0.1-SNAPSHOT</version>
 	<properties>
 		<compilerVersion>1.8</compilerVersion>
-		<jerseyVersion>1.9</jerseyVersion>
+		<jerseyJsonVersion>1.8</jerseyJsonVersion>
+		<logback.version>1.1.7</logback.version>
+		<quartz.version>2.2.1</quartz.version>
 	</properties>
 	<build>
 		<plugins>
@@ -43,7 +44,6 @@
 				<executions>
 					<execution>
 						<id>copy-resources</id>
-						<!-- GüDE!!!! Phase anpassen -->
 						<phase>prepare-package</phase>
 						<goals>
 							<goal>copy-resources</goal>
@@ -90,7 +90,7 @@
 		</plugins>
 	</build>
 	<dependencies>
-		
+
 		<dependency>
 			<groupId>asm</groupId>
 			<artifactId>asm</artifactId>
@@ -107,21 +107,40 @@
 			<version>2.22</version>
 		</dependency>
 		<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-json</artifactId>
-			<version>1.8</version>
-		</dependency>
-		<dependency>
 			<groupId>org.glassfish.jersey.media</groupId>
 			<artifactId>jersey-media-json-jackson</artifactId>
 			<scope>runtime</scope>
 			<version>2.22</version>
 		</dependency>
 		<dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-json</artifactId>
+            <version>1.8</version>
+        </dependency>
+		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-api</artifactId>
 			<version>7.0</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>${quartz.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz-jobs</artifactId>
+			<version>${quartz.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
 	</dependencies>
 </project>
