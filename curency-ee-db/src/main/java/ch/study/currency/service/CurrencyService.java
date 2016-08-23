@@ -27,9 +27,10 @@ public class CurrencyService {
 	}
 	
 	@GET
-	@Path("/change/amount/{amount}/from/{from}/to/{to}/")
+	@Path("/change/{amount}/{from}/{to}/")
 	public ChangeResponse changeMoneyCheck(@PathParam("from") String from,@PathParam("to") String to,@PathParam("amount") int amount){
-		
+		//http://localhost:8080/study/service/currency/change/200/CHF/USD/
+		System.out.println(from + " " + to + " " + amount);
 		return null;
 	}
 	

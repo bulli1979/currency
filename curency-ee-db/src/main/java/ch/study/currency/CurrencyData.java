@@ -1,6 +1,7 @@
 package ch.study.currency;
 /**
- * Enum as Singleton to hava all courses in one place
+ * Enum as Singleton to have all courses in one place
+ * stores the cursses of all courses permantently 
  * */
 public enum CurrencyData{
 	INSTANCE;
