@@ -7,7 +7,13 @@ public class CurrencyLoader implements Job{
 
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
-		System.out.println("hahamacht");
+		XMLImportService importService = new XMLImportService();
+		try {
+			importService.importXML();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

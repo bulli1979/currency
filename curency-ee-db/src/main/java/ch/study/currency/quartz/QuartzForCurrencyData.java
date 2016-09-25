@@ -11,12 +11,16 @@ import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.ee.servlet.QuartzInitializerListener;
 import org.quartz.impl.StdSchedulerFactory;
+import org.slf4j.LoggerFactory;
+
+import ch.qos.logback.classic.Logger;
 
 @WebListener
 public class QuartzForCurrencyData extends QuartzInitializerListener{
 	private final int HOURINTERVAL = 24;
 	private final String IDENTITY = "simple";
-	
+    private Logger logger = (Logger) LoggerFactory.getLogger("chapters.introduction.QuartzForCurrencyData");
+
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
 		super.contextInitialized(sce);
@@ -30,9 +34,7 @@ public class QuartzForCurrencyData extends QuartzInitializerListener{
 			scheduler.scheduleJob(jobDetail, trigger);
 			scheduler.start();
 		} catch (Exception e) {
-			
-			
-			System.out.println("haha");
+			logger.error("Error in QuartzForCurrencyData " + e.getMessage());
 		}
 	}
 }
