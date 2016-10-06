@@ -1,8 +1,8 @@
 package ch.study.currency;
 
-public class CurrencyEuro implements Currency {
-	private static final String SHORTNAME = "EU";
-	private static final String NAME = "Euro";
+public class CurrencyDollar implements Currency {
+	private static final String SHORTNAME = "USD";
+	private static final String NAME = "Dollar";
 	private double course = 0;
 	private boolean exist = true;
 	@Override
@@ -38,5 +38,4 @@ public class CurrencyEuro implements Currency {
 		this.exist = exist;
 	}
 
-	
 }

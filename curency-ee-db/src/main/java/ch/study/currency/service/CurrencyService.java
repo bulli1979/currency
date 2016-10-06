@@ -31,9 +31,12 @@ public class CurrencyService {
 	public ChangeResponse changeMoneyCheck(@PathParam("from") String from,@PathParam("to") String to,@PathParam("amount") int amount){
 		//http://localhost:8080/study/service/currency/change/200/CHF/USD/
 		System.out.println(from + " " + to + " " + amount);
+		// 1.2 0.9  1000 0.001
 		return null;
 	}
 	
 	
-	
+	private void bla(){
+
+	}
 }

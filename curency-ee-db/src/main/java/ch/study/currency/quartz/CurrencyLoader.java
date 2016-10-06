@@ -11,7 +11,6 @@ public class CurrencyLoader implements Job{
 		try {
 			importService.importXML();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

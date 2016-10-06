@@ -32,6 +32,7 @@ public enum CurrencyData {
 		}
 	}
 	public List<Currency> getCurrencyList() throws ClassNotFoundException, InstantiationException, IllegalAccessException{
+		logger.info("Huhu");
 		if(currencyList == null){
 			fillList();
 		}

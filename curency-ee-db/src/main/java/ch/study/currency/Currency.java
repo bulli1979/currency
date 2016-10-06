@@ -5,4 +5,5 @@ public interface Currency {
 	public String getName();
 	public double getCourse();
 	public void setCourse(double course);
+	public boolean exist();
 }
