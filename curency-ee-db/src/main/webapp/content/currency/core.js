@@ -3,7 +3,7 @@
 	
 	"use strict";
 	
-	var smarterApp = angular.module('currencyWeb', ['ngResource', 'ui.router', 'colorpicker.module', 'pascalprecht.translate'])
+	var currencyWeb = angular.module('currencyWeb', ['ngResource', 'ui.router', 'colorpicker.module', 'pascalprecht.translate'])
 		.config(function($stateProvider, $urlRouterProvider, $translateProvider) {
 			  
 			  // SBA: maybe the routing concept has to be reworked
@@ -43,45 +43,7 @@
 (function() {
 	"use strict";
 
-	angular.module('ironTrainWeb').factory(
-			'Endpoint',
-			function($resource) {
-
-				
-			})
-})();
-
-(function() {
-	"use strict";
-
-	angular.module('ironTrainWeb').factory('asyncLoader', function ($q, $http) {
-		 
-		  return function (options) {
-		    var deferred = $q.defer(),
-		        translations;
-		    
-		    var lang = options.key;
-		    var translations; 
-		    var data = $http.get("${rest-base-url}/label/getlanguagevalues").then(function(response){
-		    	for (var i = 0; i < response.data.length; i++) {
-			   		if(lang === response.data[i].lang) {
-			   			translations = response.data[i].values;
-			   			deferred.resolve(translations);
-			   			break;
-			   		}  
-			   	}
-		    });
-		    
-		    return deferred.promise;
-		  };
-		});	
-})();
-
-
-(function() {
-	"use strict";
-
-	angular.module('ironTrainWeb').factory('AjaxErrorHandler', function($state) {
+	angular.module('currencyWeb').factory('AjaxErrorHandler', function($state) {
 		var errCode = "";
 		var errMsg = "";
 		var errData = "";
@@ -122,19 +84,12 @@
 	
 	"use strict";
 	
-	angular.module('ironTrainWeb')
+	angular.module('currencyWeb')
 		.controller('ErrorPageController', function(AjaxErrorHandler) {
 			
 			var vm = this;
 			vm.code = AjaxErrorHandler.getErrorCode();
 			vm.message = AjaxErrorHandler.getErrorMessage();
-			
-			
-			
-			
-			
-			
-			
 			
 		});
 })();
@@ -144,12 +99,12 @@
 	"use strict";
 	
 	
-	angular.module('ironTrainWeb')
+	angular.module('currencyWeb')
 		.config(function($stateProvider, $urlRouterProvider) {
 			$stateProvider
 			    .state('error', {
 			      url: "/error",
-			      templateUrl: "app/error/error.html",
+			      templateUrl: "ui/error/error.html",
 			      controller: "ErrorPageController as errPage"
 			    });
 			});

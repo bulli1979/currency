@@ -1,10 +1,18 @@
 package ch.study.currency;
 
+import java.util.Date;
+
 public class CurrencyDollar implements Currency {
 	private static final String SHORTNAME = "USD";
 	private static final String NAME = "Dollar";
 	private double course = 0;
 	private boolean exist = true;
+	private Date date;
+	
+	public CurrencyDollar() {
+		date = new Date();
+	}
+	
 	@Override
 	public String getShortName() {
 		return SHORTNAME;
@@ -16,6 +24,11 @@ public class CurrencyDollar implements Currency {
 	}
 	
 	@Override
+	public Date getDate(){
+		return date;
+	}
+	
+	@Override
 	public double getCourse() {
 		return course;
 	}
@@ -24,13 +37,11 @@ public class CurrencyDollar implements Currency {
 	public void setCourse(double course){
 		this.course = course;
 	}
-
 	@Override
 	public boolean exist() {
 		
 		return exist;
 	}
-
 	/**
 	 * @param exist the exist to set
 	 */

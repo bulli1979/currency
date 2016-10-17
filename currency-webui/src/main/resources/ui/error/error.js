@@ -4,12 +4,12 @@
 	"use strict";
 	
 	
-	angular.module('ironTrainWeb')
+	angular.module('currencyWeb')
 		.config(function($stateProvider, $urlRouterProvider) {
 			$stateProvider
 			    .state('error', {
 			      url: "/error",
-			      templateUrl: "app/error/error.html",
+			      templateUrl: "ui/error/error.html",
 			      controller: "ErrorPageController as errPage"
 			    });
 			});

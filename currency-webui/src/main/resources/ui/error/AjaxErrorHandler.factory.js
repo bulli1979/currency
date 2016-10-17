@@ -1,7 +1,7 @@
 (function() {
 	"use strict";
 
-	angular.module('ironTrainWeb').factory('AjaxErrorHandler', function($state) {
+	angular.module('currencyWeb').factory('AjaxErrorHandler', function($state) {
 		var errCode = "";
 		var errMsg = "";
 		var errData = "";
