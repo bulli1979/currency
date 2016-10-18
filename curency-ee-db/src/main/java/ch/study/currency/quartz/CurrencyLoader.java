@@ -15,9 +15,7 @@ public class CurrencyLoader implements Job{
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		XMLImportService importService = new XMLImportService();
 		try {
-			System.out.println("here");
 			if(!DAOCurrency.getInstance().checkDayCurrency()){
-				System.out.println("inner");
 				importService.importXML();
 			}
 		} catch (Exception e) {

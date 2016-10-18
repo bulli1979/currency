@@ -51,16 +51,14 @@ public class XMLImportService {
 			if (currencyNode != null) {
 				Node rateNote = item.getAttributes().getNamedItem("rate");
 				String rateString = rateNote.getNodeValue();
-				System.out.println(rateString);
+				
 
 				String currencyString = currencyNode.getNodeValue();
-				System.out.println("c: " + currencyString);
 				Currency cur = CurrencyData.INSTANCE.getCurrencyByShortName(currencyString);
 				if(cur != null){
 						cur.setCourse(Double.parseDouble(rateString));
 						DAOCurrency.getInstance().instertCurrency(cur);
 				}
-				System.out.println("here");
 				
 			}
 		}

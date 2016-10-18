@@ -21,7 +21,9 @@ public enum CurrencyData {
 	/**
 	 * Build Currency List once
 	 */
-	private CurrencyData() {}
+	private CurrencyData() {
+		
+	}
 	private void fillList() throws ClassNotFoundException, InstantiationException, IllegalAccessException{
 		
 		Reflections reflections = new Reflections("ch.study.currency");
@@ -32,7 +34,6 @@ public enum CurrencyData {
 		}
 	}
 	public List<Currency> getCurrencyList() throws ClassNotFoundException, InstantiationException, IllegalAccessException{
-		logger.info("Huhu");
 		if(currencyList == null){
 			fillList();
 		}
@@ -41,12 +42,17 @@ public enum CurrencyData {
 	
 	public Currency getCurrencyByShortName(String shortName){
 		try{
+			if(currencyList == null){
+				fillList();
+			}
+			System.out.println(currencyList.size());
 			for(Currency currency : currencyList){
 				if(currency.getShortName().equals(shortName)){
 					return currency;
 				}
 			}	
 		}catch(Exception e){
+			System.out.println(e);
 			logger.error("Error in getCurrencyByShortName: " + e.getMessage());
 		}
 		return null;

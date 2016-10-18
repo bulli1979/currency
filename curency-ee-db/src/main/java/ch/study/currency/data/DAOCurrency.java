@@ -31,7 +31,6 @@ public class DAOCurrency {
 
 	public boolean checkDayCurrency() throws ClassNotFoundException, SQLException{
 		Date today = new Date();
-		System.out.println("here");
 		String query = "Select * from currencydata where date=?";
 		String dayString = Tool.INSTANCE.createStringFromDate(today);
 		Connection con = DBHelper.INSTANCE.getConnection();
@@ -43,7 +42,6 @@ public class DAOCurrency {
 	    	String currency = rs.getString("currency");
 	    	double course = rs.getDouble("value"); 
 	    	CurrencyData.INSTANCE.getCurrencyByShortName(currency).setCourse(course);
-	    	System.out.println("Course" + CurrencyData.INSTANCE.getCurrencyByShortName(currency).getCourse());
 	    	hasValues = true;
 	    } 
 	    
@@ -55,15 +53,12 @@ public class DAOCurrency {
 	
 	public void instertCurrency(Currency currency) throws SQLException, ClassNotFoundException{
 		Connection con = DBHelper.INSTANCE.getConnection();
-		String id = UUID.randomUUID().toString();
-		String sql = "Instert into currency ('id','currency','value','date') values(?,?,?,?)";
+		String sql = "INSERT INTO currencydata ('currency','value','date') values(?,?,?)";
 		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setString(0, id);
 		ps.setString(1, currency.getShortName());
 		ps.setDouble(2, currency.getCourse());
 		ps.setString(3, Tool.INSTANCE.createStringFromDate(currency.getDate()));
 		ps.execute();
 		ps.close();
-		
 	}
 }
