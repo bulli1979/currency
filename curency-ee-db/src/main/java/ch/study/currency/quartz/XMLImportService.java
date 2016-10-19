@@ -31,9 +31,7 @@ public class XMLImportService {
 			URLConnection connection = url.openConnection();
 			Document doc = parseXML(connection.getInputStream());
 			NodeList cubeNodes = doc.getElementsByTagName("Cube");
-			System.out.println("h1");
 			for (int i = 0; i < cubeNodes.getLength(); i++) {
-				System.out.println("h2");
 				handleData(cubeNodes.item(i));
 			}
 			CurrencyData.INSTANCE.setDate(new Date());

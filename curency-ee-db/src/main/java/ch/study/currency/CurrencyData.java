@@ -45,7 +45,6 @@ public enum CurrencyData {
 			if(currencyList == null){
 				fillList();
 			}
-			System.out.println(currencyList.size());
 			for(Currency currency : currencyList){
 				if(currency.getShortName().equals(shortName)){
 					return currency;

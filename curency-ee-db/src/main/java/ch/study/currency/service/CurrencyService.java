@@ -15,7 +15,7 @@ import ch.qos.logback.classic.Logger;
 import ch.study.currency.Currency;
 import ch.study.currency.CurrencyData;
 import ch.study.currency.business.ChangeResponse;
-@Path("/currency")
+@Path("/api")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class CurrencyService {
@@ -32,8 +32,8 @@ public class CurrencyService {
 	
 	@GET
 	@Path("/getall")
-	private void getCurrencys(){
-		
+	public List<Currency> getCurrencys() throws ClassNotFoundException, InstantiationException, IllegalAccessException{
+		return CurrencyData.INSTANCE.getCurrencyList();
 		//List<Currency> currencyList = CurrencyData.INSTANCE.getCurrencyList();
 	}
 }

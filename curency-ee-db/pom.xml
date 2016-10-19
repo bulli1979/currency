@@ -15,6 +15,7 @@
 		<quartz.version>2.2.1</quartz.version>
 	</properties>
 	<build>
+		<finalName>currency</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
