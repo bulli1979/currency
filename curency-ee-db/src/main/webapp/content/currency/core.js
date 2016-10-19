@@ -5,18 +5,48 @@
 	
 	var currencyWeb = angular.module('currencyWeb', ['ngResource', 'ui.router', 'colorpicker.module', 'pascalprecht.translate'])
 		.config(function($stateProvider, $urlRouterProvider, $translateProvider) {
-			  
-			  // SBA: maybe the routing concept has to be reworked
-			  // would be better to route the whole page content and work with
-				// nested views
-			  // For any unmatched url, redirect to /applist
-				
 			  $urlRouterProvider.otherwise("/home");
 			  $translateProvider.useLoader('asyncLoader');
 		});
 })();
 
 
+
+
+(function() {
+	"use strict";
+
+	angular.module('currencyWeb').factory(
+			'currencyEndpoint',
+			[ '$resource' ,function($resource) {
+
+				var options = { 'query':  { isArray:false} };
+				
+				var currencyEndpoint = $resource('${rest-base-url}/getall',
+						{}, options);
+				
+				
+				return currencyEndpoint;
+			}]);
+})();
+(function() {
+	"use strict";
+
+	angular.module('currencyWeb').factory('currencyEndpoint',[ '$resource' , function($resource) {
+
+		var currencyEndpoint = {};
+		var options = {
+			'query' : {
+				isArray : false
+			}
+		};
+
+	
+
+		return currencyEndpoint;
+	}]);
+
+})();
 
 
 
@@ -30,7 +60,7 @@
 			$stateProvider
 			    .state('home', {
 			      url: "/home",
-			      templateUrl: "ui/Home/home.html",
+			      templateUrl: "content/ui/Home/home.html",
 			    });
 			});
 	

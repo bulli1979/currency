@@ -9,7 +9,7 @@
 			$stateProvider
 			    .state('home', {
 			      url: "/home",
-			      templateUrl: "ui/Home/home.html",
+			      templateUrl: "content/ui/Home/home.html",
 			    });
 			});
 	
