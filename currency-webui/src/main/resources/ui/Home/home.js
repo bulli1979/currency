@@ -5,13 +5,13 @@
 	
 	
 	angular.module('currencyWeb')
-		.config(function($stateProvider, $urlRouterProvider) {
+		.config([ '$stateProvider', '$urlRouterProvider' , function($stateProvider, $urlRouterProvider) {
 			$stateProvider
 			    .state('home', {
 			      url: "/home",
 			      templateUrl: "content/ui/Home/home.html",
 			    });
-			});
+			}]);
 	
 		  
 })();

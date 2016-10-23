@@ -1,23 +1,31 @@
-	<div class="container">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h3 class="panel-title">Systemmitteilung</h3>
-			</div>
-			<div class="panel-body">{{ 'Startbildschirm' | translate }}</div>
-		</div>
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h3 class="panel-title">Geld Wechseln</h3>
-			</div>
-			<div class="panel-body">Here be dragons</div>
-		</div>
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h3 class="panel-title">My Applications</h3>
-			</div>
-			<div class="panel-body">
-				
-			</div>
+<div class="container" ng-controller="HomeController">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Kursdaten</h3>
+			
+			
+			
 		</div>
 	</div>
+	<div class="panel panel-default" >
+		<div class="panel-heading">
+			<h3 class="panel-title">Wechselkurs berechnen</h3>
+		</div>
+		<div class="panel-body">
+			<form name="myForm">
+				
+				 <select class="form-control" name="changeFrom" id="changeFrom" ng-model="data.currency">
+			      	<option value="">--- von ---</option> <!-- not selected / blank option -->
+			    </select><br>
+			 	<select class="form-control" name="changeTo" id="changeTo" ng-model="data.currency">
+			      	<option value="">--- in ---</option> <!-- not selected / blank option -->
+			    </select><br>
+				<input class="form-control" type="text" ng-model="data.value" placeholder="Betrag"><br>
+				<input class="form-control" type="button" value="umrechnen">
+			</form>
+		
+		
+		</div>
+	</div>
+</div>
 

@@ -3,10 +3,9 @@
 	
 	"use strict";
 	
-	var currencyWeb = angular.module('currencyWeb', ['ngResource', 'ui.router', 'colorpicker.module', 'pascalprecht.translate'])
-		.config(function($stateProvider, $urlRouterProvider, $translateProvider) {
+	var currencyWeb = angular.module('currencyWeb', ['ngResource', 'ui.router'])
+		.config(function($stateProvider, $urlRouterProvider) {
 			  $urlRouterProvider.otherwise("/home");
-			  $translateProvider.useLoader('asyncLoader');
 		});
 })();
 

@@ -3,10 +3,9 @@
 	
 	"use strict";
 	
-	var currencyWeb = angular.module('currencyWeb', ['ngResource', 'ui.router', 'colorpicker.module', 'pascalprecht.translate'])
-		.config(function($stateProvider, $urlRouterProvider, $translateProvider) {
+	var currencyWeb = angular.module('currencyWeb', ['ngResource', 'ui.router'])
+		.config(function($stateProvider, $urlRouterProvider) {
 			  $urlRouterProvider.otherwise("/home");
-			  $translateProvider.useLoader('asyncLoader');
 		});
 })();
 
@@ -17,38 +16,50 @@
 	"use strict";
 
 	angular.module('currencyWeb').factory(
-			'currencyEndpoint',
-			[ '$resource' ,function($resource) {
-
+			'CurrencyEndpoint',
+			[ '$resource' , function($resource) {
+				var CurrencyEndpoint = {};
 				var options = { 'query':  { isArray:false} };
+				console.log("start: ${rest-base-url}");
 				
-				var currencyEndpoint = $resource('${rest-base-url}/getall',
-						{}, options);
+				var allPath = $resource('${rest-base-url}/getAll', {}, options);
+				console.log("problem here");
 				
 				
-				return currencyEndpoint;
+								
+				CurrencyEndpoint.getAll = function(succ, err) {
+					console.log("here");
+					return allPath.get;
+				};
+				
+				return CurrencyEndpoint;
 			}]);
 })();
-(function() {
-	"use strict";
 
-	angular.module('currencyWeb').factory('currencyEndpoint',[ '$resource' , function($resource) {
-
-		var currencyEndpoint = {};
-		var options = {
-			'query' : {
-				isArray : false
-			}
-		};
-
+(function(){
 	
-
-		return currencyEndpoint;
-	}]);
-
+	"use strict";
+	
+	angular.module('currencyWeb')
+		.controller('HomeController', ['CurrencyEndpoint','$scope', function($scope, CurrencyEndpoint) {
+			var vm = this;
+			
+			var queryAll = CurrencyEndpoint.getAll(function(){
+				vm.currencys = queryAll || [];
+			});
+		
+			console.log(currencys);
+			
+			$scope.data = {
+					model: null,
+					availableOptions: [
+				      {id: '1', name: 'Option A'},
+				      {id: '2', name: 'Option B'},
+				      {id: '3', name: 'Option C'}
+		    ]
+		   };
+		}]);
 })();
-
-
 
 (function(){
 	
@@ -56,85 +67,13 @@
 	
 	
 	angular.module('currencyWeb')
-		.config(function($stateProvider, $urlRouterProvider) {
+		.config([ '$stateProvider', '$urlRouterProvider' , function($stateProvider, $urlRouterProvider) {
 			$stateProvider
 			    .state('home', {
 			      url: "/home",
 			      templateUrl: "content/ui/Home/home.html",
 			    });
-			});
-	
-		  
-})();
-
-(function() {
-	"use strict";
-
-	angular.module('currencyWeb').factory('AjaxErrorHandler', function($state) {
-		var errCode = "";
-		var errMsg = "";
-		var errData = "";
-		
-		var AjaxErrorHandler = {};
-		
-		AjaxErrorHandler.onError = function(err){
-			//TODO: Maybe attempt to send report to server?
-			$state.go("error");
-			errCode = err.status;
-			errMsg = err.statusText;
-			errData = err.data;
-		}
-		
-		AjaxErrorHandler.onErrorSilent = function(err){
-			//TODO: Dont know if we need to do anything at all here
-			console.log("silent");
-			console.log(err);
-		}
-		
-		AjaxErrorHandler.getErrorCode = function(){
-			return errCode;
-		}
-		
-		AjaxErrorHandler.getErrorMessage = function(){
-			return errMsg;
-		}
-		
-		AjaxErrorHandler.getErrorData = function(){
-			return errData;
-		}
-		
-		return AjaxErrorHandler;
-	});	
-})();
-
-(function(){
-	
-	"use strict";
-	
-	angular.module('currencyWeb')
-		.controller('ErrorPageController', function(AjaxErrorHandler) {
-			
-			var vm = this;
-			vm.code = AjaxErrorHandler.getErrorCode();
-			vm.message = AjaxErrorHandler.getErrorMessage();
-			
-		});
-})();
-
-(function(){
-	
-	"use strict";
-	
-	
-	angular.module('currencyWeb')
-		.config(function($stateProvider, $urlRouterProvider) {
-			$stateProvider
-			    .state('error', {
-			      url: "/error",
-			      templateUrl: "ui/error/error.html",
-			      controller: "ErrorPageController as errPage"
-			    });
-			});
+			}]);
 	
 		  
 })();

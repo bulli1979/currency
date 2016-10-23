@@ -12,20 +12,25 @@ import java.sql.DriverManager;
 
 
 
+/**
+ * @author Mirko Eberlein
+ * class handles all connection to SQL Database Currency Table
+ */
 public class DAOCurrency {
 
 	private static DAOCurrency instance;
-
+	//SQLite connection string
+	private final static String DBPATH = "jdbc:sqlite::resource:currency.db";
 	private DAOCurrency() {
 	}
 	
 	
 	private Connection connect() throws ClassNotFoundException {
-        // SQLite connection string
+       
         Connection conn = null;
         try {
 			Class.forName("org.sqlite.JDBC");
-        	conn = DriverManager.getConnection("jdbc:sqlite::resource:currency.db");
+        	conn = DriverManager.getConnection(DBPATH);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -33,6 +38,9 @@ public class DAOCurrency {
     }
 	
 
+	/** Returns instance allow Construct as Singleton
+	 * @return DAOCurrency instance
+	 */
 	public static DAOCurrency getInstance() {
 		if (instance == null) {
 			instance = new DAOCurrency();
@@ -40,10 +48,11 @@ public class DAOCurrency {
 		return instance;
 	}
 
-	public void getDaylyCurses() {
-
-	}
-
+	/**
+	 * @return true if there values for the current day in database existing
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
 	public boolean checkDayCurrency() throws ClassNotFoundException, SQLException{
 		Date today = new Date();
 		String query = "Select * from currencydata where date=?";
@@ -57,7 +66,6 @@ public class DAOCurrency {
 	    	String currency = rs.getString("currency");
 	    	double course = rs.getDouble("currencyvalue"); 
 	    	CurrencyData.INSTANCE.getCurrencyByShortName(currency).setCourse(course);
-	    	System.out.println("found");
 	    	hasValues = true;
 	    } 
 	    
@@ -68,6 +76,9 @@ public class DAOCurrency {
 		return hasValues;
 	}
 	
+	/** Allows to insert an currency for one day in the database
+	 * @param currency
+	 */
 	public void instertCurrency(Currency currency){
 		try{
 			Connection con = this.connect();
@@ -75,17 +86,8 @@ public class DAOCurrency {
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1, currency.getShortName());
 			ps.setDouble(2, currency.getCourse());
-			
-			System.out.println("ro:" + con.isReadOnly());
-			
 			ps.setString(3, Tool.INSTANCE.createStringFromDate(currency.getDate()));
-			System.out.println(ps.getMetaData());
-			if(ps.execute()){
-				System.out.println("insert complete" + currency.getCourse() + " " + currency.getShortName());
-			}else{
-				System.out.println("insert Failed" + currency.getCourse() + " " + currency.getShortName());
-			}
-			
+			ps.execute();
 			ps.close();
 			con.close();
 		}catch(Exception e){
