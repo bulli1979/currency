@@ -15,50 +15,79 @@
 (function() {
 	"use strict";
 
-	angular.module('currencyWeb').factory(
-			'CurrencyEndpoint',
-			[ '$resource' , function($resource) {
-				var CurrencyEndpoint = {};
-				var options = { 'query':  { isArray:false} };
-				console.log("start: ${rest-base-url}");
-				
-				var allPath = $resource('${rest-base-url}/getAll', {}, options);
-				console.log("problem here");
-				
-				
-								
-				CurrencyEndpoint.getAll = function(succ, err) {
-					console.log("here");
-					return allPath.get;
-				};
-				
-				return CurrencyEndpoint;
-			}]);
+	angular
+			.module('currencyWeb')
+			.factory(
+					'CurrencyEndpoint',
+					[
+							'$resource',
+							function($resource) {
+								var CurrencyEndpoint = {};
+
+								var options = {
+									'query' : {
+										isArray : false
+									}
+								};
+
+								var allPath = $resource(
+										'http://localhost:8080/currency-ee-db/service/api/getall', {}, {});
+								var calculatePath = $resource(
+										'http://localhost:8080/currency-ee-db/service/api/change/:amount/:from/:to/',
+										{
+											amount : "@amount",
+											from : "@from",
+											to : "@to"
+										}, options);
+
+								CurrencyEndpoint.getAll = function() {
+									return allPath.query({});
+								};
+
+								CurrencyEndpoint.calculate = function(amount, from, to, succ, err) {
+									return calculatePath.get({
+										"amount" : amount,
+										"from" : from,
+										"to" : to
+									},succ,err);
+								}
+
+								return CurrencyEndpoint;
+							} ]);
 })();
 
-(function(){
-	
+(function() {
+
 	"use strict";
-	
-	angular.module('currencyWeb')
-		.controller('HomeController', ['CurrencyEndpoint','$scope', function($scope, CurrencyEndpoint) {
-			var vm = this;
-			
-			var queryAll = CurrencyEndpoint.getAll(function(){
-				vm.currencys = queryAll || [];
-			});
-		
-			console.log(currencys);
-			
-			$scope.data = {
-					model: null,
-					availableOptions: [
-				      {id: '1', name: 'Option A'},
-				      {id: '2', name: 'Option B'},
-				      {id: '3', name: 'Option C'}
-		    ]
-		   };
-		}]);
+
+	angular.module('currencyWeb').controller('HomeController',
+			[ '$scope', 'CurrencyEndpoint', function($scope, CurrencyEndpoint) {
+				var vm = this;
+
+				vm.currencies = CurrencyEndpoint.getAll();
+				
+				
+				$scope.dataFrom = {
+					model : null,
+					
+					availableOptions : vm.currencies
+				};
+				
+				$scope.dataTo = {
+						model : null,
+						availableOptions : vm.currencies
+				};
+
+				$scope.amount = "";
+				
+				$scope.result = "";
+				
+				$scope.calculate = function() {					
+					vm.calculation = CurrencyEndpoint.calculate($scope.amount, $scope.dataFrom.model, $scope.dataTo.model, function(){
+						$scope.result = "Ergebnis " + vm.calculation.value + " " + vm.calculation.from + " sind "  + vm.calculation.result + " " + vm.calculation.to;
+					})
+				}
+			} ]);
 })();
 
 (function(){

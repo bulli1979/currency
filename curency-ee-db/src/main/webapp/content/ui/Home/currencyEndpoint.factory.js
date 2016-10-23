@@ -17,9 +17,9 @@
 								};
 
 								var allPath = $resource(
-										'${rest-base-url}/getall', {}, {});
+										'http://localhost:8080/currency-ee-db/service/api/getall', {}, {});
 								var calculatePath = $resource(
-										'${rest-base-url}/change/:amount/:from/:to/',
+										'http://localhost:8080/currency-ee-db/service/api/change/:amount/:from/:to/',
 										{
 											amount : "@amount",
 											from : "@from",

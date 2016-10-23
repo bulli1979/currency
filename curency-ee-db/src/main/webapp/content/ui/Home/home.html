@@ -14,16 +14,19 @@
 		<div class="panel-body">
 			<form name="myForm">
 				
-				 <select class="form-control" name="changeFrom" id="changeFrom" ng-model="data.currency">
+				 <select class="form-control" name="changeFrom" id="changeFrom" ng-model="dataFrom.model">
 			      	<option value="">--- von ---</option> <!-- not selected / blank option -->
+			      	<option ng-repeat="option in dataFrom.availableOptions" value="{{option.shortName}}">{{option.name}}</option>
 			    </select><br>
-			 	<select class="form-control" name="changeTo" id="changeTo" ng-model="data.currency">
+			 	<select class="form-control" name="changeTo" id="changeTo" ng-model="dataTo.model">
 			      	<option value="">--- in ---</option> <!-- not selected / blank option -->
+			      	<option ng-repeat="option in dataTo.availableOptions" value="{{option.shortName}}">{{option.name}}</option>
 			    </select><br>
-				<input class="form-control" type="text" ng-model="data.value" placeholder="Betrag"><br>
-				<input class="form-control" type="button" value="umrechnen">
+				<input class="form-control" type="text" ng-model="amount" placeholder="Betrag"><br>
+				<input ng-click="calculate()" class="form-control" type="button" value="umrechnen">
 			</form>
 		
+			<div>{{result}}</div>
 		
 		</div>
 	</div>

@@ -9,11 +9,53 @@
 	<artifactId>currency-webui</artifactId>
 	<properties>
 		<wro4j.version>1.7.9</wro4j.version>
-		<rest-base-url>http://localhost:8080/currency-ee-db/service/api/</rest-base-url>
+		<rest-base-url>http://localhost:8080/currency-ee-db/service/api</rest-base-url>
 	</properties>
 
 	<build>
 		<plugins>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.6</version>
+				<executions>
+					<execution>
+						<id>copy-resources-base</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>target/dist</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${basedir}/src/main/resources</directory>
+									<filtering>true</filtering>
+									<excludes>
+										<exclude>**/*.css</exclude>
+										<exclude>vendor/fonts/*</exclude>
+									</excludes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-resources-fonts</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>target/dist/fonts</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${basedir}/src/main/resources/vendor/fonts</directory>
+									<filtering>false</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>ro.isdc.wro4j</groupId>
 				<artifactId>wro4j-maven-plugin</artifactId>
@@ -28,7 +70,7 @@
 						<configuration>
 							<wroFile>${basedir}/WEB-INF/wro.xml</wroFile>
 							<destinationFolder>${basedir}/target/dist/currency</destinationFolder>
-							<contextFolder>${basedir}/src/main/resources/</contextFolder>
+							<contextFolder>${basedir}/target/dist</contextFolder>
 							<wroManagerFactory>ro.isdc.wro.maven.plugin.manager.factory.ConfigurableWroManagerFactory</wroManagerFactory>
 							<extraConfigFile>${basedir}/WEB-INF/wro.properties</extraConfigFile>
 						</configuration>
@@ -60,49 +102,7 @@
 					</filesets>
 				</configuration>
 			</plugin>
-			<plugin>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.6</version>
-				<executions>
-					<execution>
-						<id>copy-resources-base</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>target/dist</outputDirectory>
-							<resources>
-								<resource>
-									<directory>${basedir}/src/main/resources</directory>
-									<filtering>true</filtering>
-									<excludes>
-										<exclude>**/*.js</exclude>
-										<exclude>**/*.css</exclude>
-										<exclude>vendor/fonts/*</exclude>
-									</excludes>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-					<execution>
-						<id>copy-resources-fonts</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>target/dist/fonts</outputDirectory>
-							<resources>
-								<resource>
-									<directory>${basedir}/src/main/resources/vendor/fonts</directory>
-									<filtering>false</filtering>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+			
 		</plugins>
 	</build>
 </project>

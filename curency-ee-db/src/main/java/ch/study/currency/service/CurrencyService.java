@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import ch.qos.logback.classic.Logger;
 import ch.study.currency.Currency;
 import ch.study.currency.CurrencyData;
+import ch.study.currency.action.ChangeMoneyClass;
 import ch.study.currency.business.ChangeResponse;
 @Path("/api")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -23,11 +24,13 @@ public class CurrencyService {
 	
 	@GET
 	@Path("/change/{amount}/{from}/{to}/")
-	public ChangeResponse changeMoneyCheck(@PathParam("from") String from,@PathParam("to") String to,@PathParam("amount") int amount){
+	public ChangeResponse changeMoneyCheck(@PathParam("from") String from,@PathParam("to") String to,@PathParam("amount") double amount){
 		//http://localhost:8080/study/service/currency/change/200/CHF/USD/
-		System.out.println(from + " " + to + " " + amount);
-		// 1.2 0.9  1000 0.001
-		return null;
+		
+		return new ChangeResponse.Builder(from, to, amount).
+				addResult(ChangeMoneyClass.change(CurrencyData.INSTANCE.getCurrencyByShortName(from).getCourse(), 
+						CurrencyData.INSTANCE.getCurrencyByShortName(to).getCourse(), amount)).build();
+		
 	}
 	
 	@GET
