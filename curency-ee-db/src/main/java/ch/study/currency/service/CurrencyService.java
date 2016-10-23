@@ -25,7 +25,6 @@ public class CurrencyService {
 	@GET
 	@Path("/change/{amount}/{from}/{to}/")
 	public ChangeResponse changeMoneyCheck(@PathParam("from") String from,@PathParam("to") String to,@PathParam("amount") double amount){
-		//http://localhost:8080/study/service/currency/change/200/CHF/USD/
 		
 		return new ChangeResponse.Builder(from, to, amount).
 				addResult(ChangeMoneyClass.change(CurrencyData.INSTANCE.getCurrencyByShortName(from).getCourse(), 

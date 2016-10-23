@@ -2,6 +2,10 @@ package ch.study.currency;
 
 import java.util.Date;
 
+/**Interface for all currencies
+ * @author Mirko Eberlein
+ *
+ */
 public interface Currency {
 	public String getShortName();
 	public String getName();

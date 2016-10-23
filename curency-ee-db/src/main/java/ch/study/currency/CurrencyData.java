@@ -33,6 +33,8 @@ public enum CurrencyData {
 			currencyList.add(clazz.newInstance());
 		}
 	}
+	
+	
 	public List<Currency> getCurrencyList() throws ClassNotFoundException, InstantiationException, IllegalAccessException{
 		if(currencyList == null){
 			fillList();
