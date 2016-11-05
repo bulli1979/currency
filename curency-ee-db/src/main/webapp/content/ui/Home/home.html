@@ -1,34 +1,23 @@
-<div class="container" ng-controller="HomeController">
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h3 class="panel-title">Kursdaten</h3>
-			
-			
-			
+	<div class="container">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Systemmitteilung</h3>
+			</div>
+			<div class="panel-body">{{ 'Startbildschirm' | translate }}</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Workflow Inbox</h3>
+			</div>
+			<div class="panel-body">Here be dragons</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">My Applications</h3>
+			</div>
+			<div class="panel-body">
+				<div ng-include="'app/AppsList/apps_list.html'"></div>
+			</div>
 		</div>
 	</div>
-	<div class="panel panel-default" >
-		<div class="panel-heading">
-			<h3 class="panel-title">Wechselkurs berechnen</h3>
-		</div>
-		<div class="panel-body">
-			<form name="myForm">
-				
-				 <select class="form-control" name="changeFrom" id="changeFrom" ng-model="dataFrom.model">
-			      	<option value="">--- von ---</option> <!-- not selected / blank option -->
-			      	<option ng-repeat="option in dataFrom.availableOptions" value="{{option.shortName}}">{{option.name}}</option>
-			    </select><br>
-			 	<select class="form-control" name="changeTo" id="changeTo" ng-model="dataTo.model">
-			      	<option value="">--- in ---</option> <!-- not selected / blank option -->
-			      	<option ng-repeat="option in dataTo.availableOptions" value="{{option.shortName}}">{{option.name}}</option>
-			    </select><br>
-				<input class="form-control" type="text" ng-model="amount" placeholder="Betrag"><br>
-				<input ng-click="calculate()" class="form-control" type="button" value="umrechnen">
-			</form>
-		
-			<div>{{result}}</div>
-		
-		</div>
-	</div>
-</div>
 

@@ -3,91 +3,92 @@
 	
 	"use strict";
 	
-	var currencyWeb = angular.module('currencyWeb', ['ngResource', 'ui.router'])
-		.config(function($stateProvider, $urlRouterProvider) {
+	var currencyWeb = angular.module('currencyWeb', ['ngResource', 'ui.router', 'colorpicker.module', 'pascalprecht.translate'])
+		.config(function($stateProvider, $urlRouterProvider, $translateProvider) {
+			  
+			  // SBA: maybe the routing concept has to be reworked
+			  // would be better to route the whole page content and work with
+				// nested views
+			  // For any unmatched url, redirect to /applist
+				
 			  $urlRouterProvider.otherwise("/home");
+			  $translateProvider.useLoader('asyncLoader');
 		});
 })();
 
 
 
 
-(function() {
+
+(function(){
+	
 	"use strict";
-
-	angular
-			.module('currencyWeb')
-			.factory(
-					'CurrencyEndpoint',
-					[
-							'$resource',
-							function($resource) {
-								var CurrencyEndpoint = {};
-
-								var options = {
-									'query' : {
-										isArray : false
-									}
-								};
-
-								var allPath = $resource(
-										'http://localhost:8080/currency-ee-db/service/api/getall', {}, {});
-								var calculatePath = $resource(
-										'http://localhost:8080/currency-ee-db/service/api/change/:amount/:from/:to/',
-										{
-											amount : "@amount",
-											from : "@from",
-											to : "@to"
-										}, options);
-
-								CurrencyEndpoint.getAll = function() {
-									return allPath.query({});
-								};
-
-								CurrencyEndpoint.calculate = function(amount, from, to, succ, err) {
-									return calculatePath.get({
-										"amount" : amount,
-										"from" : from,
-										"to" : to
-									},succ,err);
-								}
-
-								return CurrencyEndpoint;
-							} ]);
+	
+	
+	angular.module('currencyWeb')
+		.config(function($stateProvider, $urlRouterProvider) {
+			$stateProvider
+			    .state('home', {
+			      url: "/home",
+			      templateUrl: "ui/Home/home.html",
+			    });
+			});
+	
+		  
 })();
 
 (function() {
-
 	"use strict";
 
-	angular.module('currencyWeb').controller('HomeController',
-			[ '$scope', 'CurrencyEndpoint', function($scope, CurrencyEndpoint) {
-				var vm = this;
+	angular.module('currencyWeb').factory('AjaxErrorHandler', function($state) {
+		var errCode = "";
+		var errMsg = "";
+		var errData = "";
+		
+		var AjaxErrorHandler = {};
+		
+		AjaxErrorHandler.onError = function(err){
+			//TODO: Maybe attempt to send report to server?
+			$state.go("error");
+			errCode = err.status;
+			errMsg = err.statusText;
+			errData = err.data;
+		}
+		
+		AjaxErrorHandler.onErrorSilent = function(err){
+			//TODO: Dont know if we need to do anything at all here
+			console.log("silent");
+			console.log(err);
+		}
+		
+		AjaxErrorHandler.getErrorCode = function(){
+			return errCode;
+		}
+		
+		AjaxErrorHandler.getErrorMessage = function(){
+			return errMsg;
+		}
+		
+		AjaxErrorHandler.getErrorData = function(){
+			return errData;
+		}
+		
+		return AjaxErrorHandler;
+	});	
+})();
 
-				vm.currencies = CurrencyEndpoint.getAll();
-				
-				
-				$scope.dataFrom = {
-					model : null,
-					
-					availableOptions : vm.currencies
-				};
-				
-				$scope.dataTo = {
-						model : null,
-						availableOptions : vm.currencies
-				};
-
-				$scope.amount = "";
-				
-				$scope.result = "";
-				
-				$scope.calculate = function() {					
-					vm.calculation = CurrencyEndpoint.calculate($scope.amount, $scope.dataFrom.model, $scope.dataTo.model, function(){
-						$scope.result = "Ergebnis " + vm.calculation.value + " " + vm.calculation.from + " sind "  + vm.calculation.result + " " + vm.calculation.to;
-					})
-				}
-			} ]);
+(function(){
+	
+	"use strict";
+	
+	angular.module('currencyWeb')
+		.controller('ErrorPageController', function(AjaxErrorHandler) {
+			
+			var vm = this;
+			vm.code = AjaxErrorHandler.getErrorCode();
+			vm.message = AjaxErrorHandler.getErrorMessage();
+			
+		});
 })();
 
 (function(){
@@ -96,13 +97,14 @@
 	
 	
 	angular.module('currencyWeb')
-		.config([ '$stateProvider', '$urlRouterProvider' , function($stateProvider, $urlRouterProvider) {
+		.config(function($stateProvider, $urlRouterProvider) {
 			$stateProvider
-			    .state('home', {
-			      url: "/home",
-			      templateUrl: "content/ui/Home/home.html",
+			    .state('error', {
+			      url: "/error",
+			      templateUrl: "ui/error/error.html",
+			      controller: "ErrorPageController as errPage"
 			    });
-			}]);
+			});
 	
 		  
 })();
