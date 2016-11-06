@@ -10,8 +10,6 @@ import ch.study.currency.CurrencyData;
 import ch.study.currency.Tool;
 import java.sql.DriverManager;
 
-
-
 /**
  * @author Mirko Eberlein
  * class handles all connection to SQL Database Currency Table
@@ -38,7 +36,7 @@ public class DAOCurrency {
     }
 	
 
-	/** Returns instance allow Construct as Singleton
+	/** Returns instance allow Construct as Singletonf
 	 * @return DAOCurrency instance
 	 */
 	public static DAOCurrency getInstance() {
@@ -57,22 +55,21 @@ public class DAOCurrency {
 		Date today = new Date();
 		String query = "Select * from currencydata where date=?";
 		String dayString = Tool.INSTANCE.createStringFromDate(today);
-		Connection conn = this.connect();
-		PreparedStatement ps = conn.prepareStatement(query);
+		Connection connection = this.connect();
+		PreparedStatement ps = connection.prepareStatement(query);
 		ps.setString(1, dayString);
-		ResultSet rs = ps.executeQuery();
+		ResultSet resultSet = ps.executeQuery();
 		boolean hasValues = false;
-	    while(rs.next() && rs.getInt(1)>0) {
-	    	String currency = rs.getString("currency");
-	    	double course = rs.getDouble("currencyvalue"); 
+	    while(resultSet.next() && resultSet.getInt(1)>0) {
+	    	String currency = resultSet.getString("currency");
+	    	double course = resultSet.getDouble("currencyvalue"); 
 	    	CurrencyData.INSTANCE.getCurrencyByShortName(currency).setCourse(course);
 	    	hasValues = true;
 	    } 
 	    
-	    rs.close();
+	    resultSet.close();
 	    ps.close();
-	    conn.close();
-	    System.out.println(hasValues);
+	    connection.close();
 		return hasValues;
 	}
 	
