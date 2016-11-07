@@ -2,14 +2,14 @@ package ch.study.currency;
 
 import java.util.Date;
 
-public class CurrencyJapanischerYen implements Currency {
-	private static final String SHORTNAME = "JPY";
-	private static final String NAME = "Japanischer Yen";
+public class CurrencyIDR implements Currency {
+	private static final String SHORTNAME = "IDF";
+	private static final String NAME = "Indonesische Rupiah";
 	private double course = 0;
 	private boolean exist = true;
 	private Date date;
 	
-	public CurrencyJapanischerYen() {
+	public CurrencyIDR() {
 		date = new Date();
 	}
 	
