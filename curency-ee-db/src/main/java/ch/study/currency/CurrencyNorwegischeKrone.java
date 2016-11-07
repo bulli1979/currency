@@ -2,14 +2,14 @@ package ch.study.currency;
 
 import java.util.Date;
 
-public class CurrencyNOK implements Currency {
+public class CurrencyNorwegischeKrone implements Currency {
 	private static final String SHORTNAME = "NOK";
 	private static final String NAME = "Norwegische Kronen";
 	private double course = 0;
 	private boolean exist = true;
 	private Date date;
 	
-	public CurrencyNOK() {
+	public CurrencyNorwegischeKrone() {
 		date = new Date();
 	}
 	
