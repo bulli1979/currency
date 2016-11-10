@@ -25,17 +25,19 @@ public class CurrencyService {
 	@GET
 	@Path("/change/{amount}/{from}/{to}/")
 	public ChangeResponse changeMoneyCheck(@PathParam("from") String from,@PathParam("to") String to,@PathParam("amount") double amount){
-		
+		try{
 		return new ChangeResponse.Builder(from, to, amount).
 				addResult(ChangeMoneyClass.change(CurrencyData.INSTANCE.getCurrencyByShortName(from).getCourse(), 
-						CurrencyData.INSTANCE.getCurrencyByShortName(to).getCourse(), amount)).build();
-		
+						CurrencyData.INSTANCE.getCurrencyByShortName(to).getCourse(), amount)).addStatus(200).build();
+		}catch(Exception e){
+			logger.error("Im Restservice changeMoneyCheck ist ein Fehler aufgetreten." ,e);
+			return new ChangeResponse.Builder(from, to, amount).addResult(0).addStatus(401).build();
+		}
 	}
 	
 	@GET
 	@Path("/getall")
 	public List<Currency> getCurrencys() throws ClassNotFoundException, InstantiationException, IllegalAccessException{
 		return CurrencyData.INSTANCE.getCurrencyList();
-		//List<Currency> currencyList = CurrencyData.INSTANCE.getCurrencyList();
 	}
 }

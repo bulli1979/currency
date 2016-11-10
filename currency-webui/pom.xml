@@ -9,7 +9,7 @@
 	<artifactId>currency-webui</artifactId>
 	<properties>
 		<wro4j.version>1.7.9</wro4j.version>
-		<rest-base-url>http://localhost:8080/currency-ee-db/service/api</rest-base-url>
+		<rest-base-url>/currency/service/api</rest-base-url>
 	</properties>
 
 	<build>
