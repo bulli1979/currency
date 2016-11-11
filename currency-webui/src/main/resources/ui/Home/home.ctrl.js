@@ -14,17 +14,22 @@
 					var to = $scope.dataTo.model;
 					console.log(from + " " + to);
 					var correct = true;
-					if(amount == ""){
-						$scope.errortext = "Bitte gebe eine Ganzzahlbetrag ein!\n"
+					var tempErrorText = "";
+					var match = /^[0-9]{1,8}/g;
+					
+					
+					if(!amount.match(match)){
+						tempErrorText = "Bitte gebe eine Ganzzahlbetrag ein! Maximal 8 Zeichen!\n\npre";
 							correct = false;
 					}
 					if(from == null || to == null){
-						$scope.errortext += "Bitte fülle Start und Zielwährung aus!\n "
+						tempErrorText += "Bitte fülle Start und Zielwährung aus!\n\npre";
 							correct = false;
 					}else if(from == to){
-						$scope.errortext += "Start und Zielwährung müssen unterschiedlich sein!"
+						tempErrorText += "Start und Zielwährung müssen unterschiedlich sein!\n\npre";
 							correct = false;
 					}
+					$scope.errortext = tempErrorText;
 					return correct;
 				}
 				
