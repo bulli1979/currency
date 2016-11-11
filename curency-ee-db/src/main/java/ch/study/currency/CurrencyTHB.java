@@ -2,14 +2,14 @@ package ch.study.currency;
 
 import java.util.Date;
 
-public class CurrencyDollar implements Currency {
-	private static final String SHORTNAME = "USD";
-	private static final String NAME = "Dollar";
+public class CurrencyTHB implements Currency {
+	private static final String SHORTNAME = "THB";
+	private static final String NAME = "Thailändischer Baht";
 	private double course = 0;
 	private boolean exist = true;
 	private Date date;
 	
-	public CurrencyDollar() {
+	public CurrencyTHB() {
 		date = new Date();
 	}
 	
