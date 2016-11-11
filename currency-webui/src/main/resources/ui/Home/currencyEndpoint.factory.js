@@ -30,6 +30,7 @@
 
 						CurrencyEndpoint.calculate = function(amount, from, to,
 								succ, err) {
+							
 							return calculatePath.get({
 								"amount" : amount,
 								"from" : from,
