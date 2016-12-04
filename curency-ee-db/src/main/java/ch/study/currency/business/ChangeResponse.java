@@ -21,6 +21,11 @@ public class ChangeResponse {
 		this.error = builder.error;
 	}
 	
+	
+	/**static Builder class helps to handle alle input values better in a constructor
+	 * better readable see Effective Java item 2 for understand
+	 * @author admin
+	 */
 	public static class Builder{
 		private int status;
 		private String from;

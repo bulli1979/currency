@@ -5,6 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+
+import org.slf4j.LoggerFactory;
+
+import ch.qos.logback.classic.Logger;
 import ch.study.currency.Currency;
 import ch.study.currency.CurrencyData;
 import ch.study.currency.Tool;
@@ -13,14 +17,16 @@ import java.sql.DriverManager;
 /**
  * @author Mirko Eberlein
  * class handles all connection to SQL Database Currency Table
+ * Singelton
  */
 public class DAOCurrency {
 
 	private static DAOCurrency instance;
 	//SQLite connection string
 	private final static String DBPATH = "jdbc:sqlite::resource:currency.db";
-	private DAOCurrency() {
-	}
+	private Logger logger = (Logger) LoggerFactory.getLogger("ch.study.currency.data.DAOCurrency");
+	
+	private DAOCurrency() {}
 	
 	
 	private Connection connect() throws ClassNotFoundException {
@@ -88,7 +94,7 @@ public class DAOCurrency {
 			ps.close();
 			con.close();
 		}catch(Exception e){
-			System.out.println(e);
+			logger.error("InsertCurrency error",e);
 		}
 	}
 }

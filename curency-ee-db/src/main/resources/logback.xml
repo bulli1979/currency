@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-
+	<!--  add here the path to your log folder -->
     <property name="DEV_HOME" value="c:/logs" />
 
     <appender name="FILE-AUDIT"
