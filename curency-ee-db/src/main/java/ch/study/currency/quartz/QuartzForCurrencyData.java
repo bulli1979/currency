@@ -15,6 +15,19 @@ import org.slf4j.LoggerFactory;
 
 import ch.qos.logback.classic.Logger;
 
+
+/**
+ * 
+ * @author Mirko Eberlein
+ * @version 0.1
+ *
+ */
+
+/**
+ * The QuartzForCurrencyData class creates a new job for the Quartz Job Scheduler. The created job will be
+ * executed in a 24 hour interval. 
+ *
+ */
 @WebListener
 public class QuartzForCurrencyData extends QuartzInitializerListener{
 	private final int HOURINTERVAL = 24;
