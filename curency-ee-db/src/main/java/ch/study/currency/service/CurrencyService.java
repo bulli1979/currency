@@ -38,8 +38,7 @@ public class CurrencyService {
 	 * @return Response with currency data
 	 */
 	@GET
-	@Path("/change/{amount}/{from}/{to}/")
-	
+	@Path("/change/{amount}/{from}/{to}/")	
 	public Response changeMoneyCheck(
 			@PathParam("from") String from,
 			@PathParam("to") String to,
@@ -53,6 +52,21 @@ public class CurrencyService {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(new ChangeResponse.Builder(from, to, amount).addResult(0).addStatus(401).addError(e.toString()). build()).build();
 		}
 	}
+	
+	
+	@GET
+	@Path("/history/{from}/{to}/")
+	public Response getHistory(
+			@PathParam("from") String from,
+			@PathParam("to") String to){
+		try{
+			return Response.status(Status.OK).entity(Tool.getHistory(from,to)).build();
+			}catch(Exception e){
+				logger.error("Im Restservice changeMoneyCheck ist ein Fehler aufgetreten." ,e);
+				return Response.status(Status.INTERNAL_SERVER_ERROR).entity("Error in History " + e).build();
+			}
+	}
+	
 	
 	/**
 	 * @return list of all currencys who are aviable in the system

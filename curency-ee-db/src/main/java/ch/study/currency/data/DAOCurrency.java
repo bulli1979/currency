@@ -1,10 +1,12 @@
 package ch.study.currency.data;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +14,9 @@ import ch.qos.logback.classic.Logger;
 import ch.study.currency.Currency;
 import ch.study.currency.CurrencyData;
 import ch.study.currency.Tool;
+import ch.study.currency.action.NumberCalculation;
+import ch.study.currency.business.History;
+
 import java.sql.DriverManager;
 
 /**
@@ -97,4 +102,62 @@ public class DAOCurrency {
 			logger.error("InsertCurrency error",e);
 		}
 	}
+
+
+	public List<History> getHistory(String from, String to) throws ClassNotFoundException, SQLException, ParseException {
+		Connection con = this.connect();
+		List<History> historyList = new ArrayList<>();
+		try{
+			String sql = "SELECT * FROM currencydata where currency=? or currency=? order by date";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, from);
+			ps.setString(2, to);
+			ResultSet resultSet = ps.executeQuery();
+			handleResultSet(historyList, resultSet, from, to);
+			resultSet.close();
+			ps.close();
+			con.close();
+		}catch(Exception e){
+			System.out.println(e);
+		}
+		return historyList;
+	}
+	
+	private void handleResultSet(List<History> historyList , ResultSet resultSet,String from, String to) throws SQLException{
+		History history = null;
+		double fromCourse = 0;
+		double toCourse = 0;
+		double actValue;
+		String date = null;
+		while(resultSet.next()){
+			String dataDate =resultSet.getString("date");
+			if(date == null || !date.equals(dataDate)){
+				date = dataDate;
+				history = new History();
+				toCourse = setCourse(to);
+				fromCourse = setCourse(from);
+				history.setDate(date);
+			}
+			String currency = resultSet.getString("currency");
+			actValue = resultSet.getDouble("currencyvalue");
+			if(currency.equals(from)){
+				fromCourse = actValue;
+			}else if(currency.equals(to)){
+				toCourse = actValue;
+			}
+			if(fromCourse!=0 && toCourse != 0){
+				history.setCourse(Tool.round(NumberCalculation.change(fromCourse, toCourse,1), 2));
+				historyList.add(history);
+			}
+		}
+	}
+	private double setCourse(String currency){
+		//Euro is all time 1
+		if(currency.equals("EUR")){
+			return 1;
+		}else{
+			return 0;
+		}
+	}
+		
 }

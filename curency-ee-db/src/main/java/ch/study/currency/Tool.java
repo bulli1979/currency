@@ -1,8 +1,13 @@
 package ch.study.currency;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+
+import ch.study.currency.business.History;
+import ch.study.currency.data.DAOCurrency;
 
 /**
  * @author Mirko Eberlein
@@ -44,6 +49,11 @@ public enum Tool {
 	    value = value * factor;
 	    long tmp = Math.round(value);
 	    return (double) tmp / factor;
+	}
+
+
+	public static List<History> getHistory(String from, String to) throws ClassNotFoundException, SQLException, ParseException {
+		return DAOCurrency.getInstance().getHistory(from,to);
 	}
 	
 }
