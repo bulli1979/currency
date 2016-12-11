@@ -57,10 +57,10 @@ public enum Tool {
 	}
 
 	/**
-	 * Returns a list with the ...
-	 * @param from 
-	 * @param to 
-	 * @return 
+	 * Returns a list with all historical exchange rates available for the commited currencies.
+	 * @param from base currency
+	 * @param to target currency
+	 * @return list with historical exchange rates
 	 */
 	public static List<History> getHistory(String from, String to) throws ClassNotFoundException, SQLException, ParseException {
 		return DAOCurrency.getInstance().getHistory(from,to);
