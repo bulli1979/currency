@@ -19,9 +19,9 @@ import ch.study.currency.action.NumberCalculation;
 import ch.study.currency.business.ChangeResponse;
 /**
  * @author Mirko Eberlein
- * Jax RS Rest Service Mapped auf den api pfad. 
+ * Jax RS Rest Service maps to the api path. 
  * Alle Anfragen auf API gehen hier ein und werden auf die entsprechenden Funktionen weitergeleitet.
- *
+ * All requests to the API congregate here and will be forwarded to the appropriate functions.
  */
 @Path("/api")
 @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -33,7 +33,7 @@ public class CurrencyService {
 	
 	/**
 	 * @param from from which currency will be changed
-	 * @param to in which currency will be changed
+	 * @param to to which currency will be changed
 	 * @param amount amount of money
 	 * @return Response with currency data
 	 */
@@ -69,7 +69,7 @@ public class CurrencyService {
 	
 	
 	/**
-	 * @return list of all currencys who are aviable in the system
+	 * @return list of all currencies which are available in the system
 	 * @throws ClassNotFoundException
 	 * @throws InstantiationException
 	 * @throws IllegalAccessException
