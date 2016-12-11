@@ -2,6 +2,12 @@ package ch.study.currency;
 
 import java.util.Date;
 
+/**
+ * @author Nicole Wallner
+ * @version 0.1
+ *
+ */
+
 public class CurrencyNOK implements Currency {
 	private static final String SHORTNAME = "NOK";
 	private static final String NAME = "Norwegische Kronen";
