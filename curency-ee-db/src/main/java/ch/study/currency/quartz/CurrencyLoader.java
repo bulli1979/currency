@@ -10,10 +10,16 @@ import ch.qos.logback.classic.Logger;
 import ch.study.currency.data.DAOCurrency;
 
 /**
- * Class check if there Data for today in the database if not the act courses
- * will be importet from the ezb
+* 
+* @author Mirko Eberlein
+* @version 0.1
+* 
+ */
+
+/**
+ * The CurrencyLoader class checks in the SQLite database if data for the current day exists. If not, the current courses
+ * will be imported from the European Central Bank.
  * 
- * @author Mirko Eberlein
  *
  */
 public class CurrencyLoader implements Job {
@@ -39,8 +45,10 @@ public class CurrencyLoader implements Job {
 	}
 
 	
-	/** Function to handle server shut downs to get no memory leak
-	 * @throws UnableToInterruptJobException
+	/** 
+	 * Function to handle server shutdowns. Protects from memory leaks.
+	 * 
+	 * @throws UnableToInterruptJobException	An exception that is thrown to indicate that a call to InterruptableJob.interrupt() failed without interrupting the Job. 
 	 */
 	public void interrupt() throws UnableToInterruptJobException {
 		thread.interrupt();
