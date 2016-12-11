@@ -21,8 +21,13 @@ import java.sql.DriverManager;
 
 /**
  * @author Mirko Eberlein
- * class handles all connection to SQL Database Currency Table
- * Singelton
+ * @version 0.1
+ */
+
+/**
+ * The DAOCurrency class handles the connections to the local SQLite database table which keeps the currencies data. 
+ * The class is realized as a singleton.
+ * 
  */
 public class DAOCurrency {
 
@@ -31,9 +36,20 @@ public class DAOCurrency {
 	private final static String DBPATH = "jdbc:sqlite::resource:currency.db";
 	private Logger logger = (Logger) LoggerFactory.getLogger("ch.study.currency.data.DAOCurrency");
 	
+	/**
+	 * Constructor to build a default DAOCurrency object.	
+	 * 
+	 */
 	private DAOCurrency() {}
 	
-	
+	/**
+	 * Opens a connection to the local SQLite database.	
+	 * 
+	 * @throws SQLException		An exception that provides information on a database access error or other errors. 
+	 * 
+	 * @return a Connection object
+	 * 
+	 */
 	private Connection connect() throws ClassNotFoundException {
        
         Connection conn = null;
@@ -47,8 +63,11 @@ public class DAOCurrency {
     }
 	
 
-	/** Returns instance allow Construct as Singletonf
+	/** 
+	 * Creates a DAOCurrency object as singleton and returns the instance.
+	 * 
 	 * @return DAOCurrency instance
+	 * 
 	 */
 	public static DAOCurrency getInstance() {
 		if (instance == null) {
@@ -58,9 +77,13 @@ public class DAOCurrency {
 	}
 
 	/**
-	 * @return true if there values for the current day in database existing
-	 * @throws ClassNotFoundException
-	 * @throws SQLException
+	 * Opens a connection to the local database and checks if a daily update is already available. If a daily update
+	 * is available the CurrencyData objects will be updated. 
+	 * 
+	 * @return true if there are values for the current day in database existing
+	 * 
+	 * @throws ClassNotFoundException	Thrown when an application tries to load in a class through its string name, but no definition for the class with the specified name could be found.
+	 * @throws SQLException				An exception that provides information on a database access error or other errors. 
 	 */
 	public boolean checkDayCurrency() throws ClassNotFoundException, SQLException{
 		Date today = new Date();
@@ -84,8 +107,10 @@ public class DAOCurrency {
 		return hasValues;
 	}
 	
-	/** Allows to insert an currency for one day in the database
-	 * @param currency
+	/**
+	 * Inserts a currency value for the current day into the SQLite database.
+	 * 
+	 * @param currency 	Currency object which is used as source for the current currency value.
 	 */
 	public void instertCurrency(Currency currency){
 		try{
