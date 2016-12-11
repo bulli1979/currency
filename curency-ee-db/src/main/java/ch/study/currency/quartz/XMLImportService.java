@@ -20,10 +20,26 @@ import ch.study.currency.Currency;
 import ch.study.currency.CurrencyData;
 import ch.study.currency.data.DAOCurrency;
 
+/**
+ * @author Michael Federer
+ * @version 0.1
+ *
+ */
+
+/**
+ * The XMLImportService class establishes a connection to the given URL and creates an input stream to it. The target URL
+ * data will be readout and saved locally in a Document object. The Document object will be parsed for certain DOM elements
+ * and the corresponding values will be used to update the specific Currency instance object.
+ *
+ */
 public class XMLImportService {
 	private Logger logger = (Logger) LoggerFactory.getLogger("chapters.introduction.XMLImportService");
 	private final String ezbPath = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml";
 	
+	/**
+	 * Imports the currencies from the current day provided in a XML-file from the specific EZB URL. And parses the URL input stream for the available
+	 * currencies.
+	 */
 	public void importXML() {
 		URL url;
 		try {
@@ -43,6 +59,14 @@ public class XMLImportService {
 
 	}
 
+	/**
+	* Extracts the values from the given items and updates the specific Currency instances with the values.
+	* 
+	* @param item	Node interface object. The Node interface is the primary datatype for the entire Document Object Model (DOM). It represents a single node in the document tree.
+	*
+	* @throws ClassNotFoundException	Thrown when an application tries to load in a class through its string name, but no definition for the class with the specified name could be found.
+	* @throws SQLException				An exception that provides information on a database access error or other errors. 
+	*/
 	private void handleData(Node item) throws ClassNotFoundException, SQLException{
 		if (item.hasAttributes()) {
 			Node currencyNode = item.getAttributes().getNamedItem("currency");
@@ -62,6 +86,14 @@ public class XMLImportService {
 		}
 	}
 	
+	/**
+	* Parses the commited URL filestream and creates a Document object.
+	* 
+	* @param inputStream	InputStream object, which represents a connection to a URL.
+	* 
+	* @return Document interface object, which represents the entire XML document at the given URL. Conceptually, it is the root of the document tree, and provides the primary access to the document's data. 
+	*
+	*/
 	private Document parseXML(InputStream inputStream) {
 		DocumentBuilderFactory objDocumentBuilderFactory = null;
 		DocumentBuilder objDocumentBuilder = null;
