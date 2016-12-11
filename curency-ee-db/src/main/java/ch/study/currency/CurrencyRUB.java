@@ -2,6 +2,12 @@ package ch.study.currency;
 
 import java.util.Date;
 
+/**
+ * @author Nicole Wallner
+ * @version 0.1
+ *
+ */
+
 public class CurrencyRUB implements Currency {
 	private static final String SHORTNAME = "RUB";
 	private static final String NAME = "Russischer Rubel";
