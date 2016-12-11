@@ -2,6 +2,12 @@ package ch.study.currency;
 
 import java.util.Date;
 
+/**
+ * @author Nicole Wallner
+ * @version 0.1
+ *
+ */
+
 public class CurrencyCHF implements Currency {
 	private static final String SHORTNAME = "CHF";
 	private static final String NAME = "Schweizer Franken";
