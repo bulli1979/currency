@@ -31,7 +31,6 @@
 									<directory>${basedir}/src/main/resources</directory>
 									<filtering>true</filtering>
 									<excludes>
-										<exclude>**/*.css</exclude>
 										<exclude>vendor/fonts/*</exclude>
 									</excludes>
 								</resource>

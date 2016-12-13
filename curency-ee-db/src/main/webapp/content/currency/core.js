@@ -77,7 +77,7 @@
 						tempErrorText = "Bitte gebe einen Ganzzahlbetrag ein! Maximal 8 Zeichen!\n";
 							correct = false;
 					}
-					if(from == null || to == null){
+					if(from == null || from == "" || to == null || to == ""){
 						tempErrorText += "Bitte fülle die Start und Zielwährung aus!\n";
 							correct = false;
 					}else if(from == to){
