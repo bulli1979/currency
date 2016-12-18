@@ -1,4 +1,15 @@
 package ch.study.currency.business;
+
+/**
+ * @author Mirko Eberlein
+ * @version 0.1
+ *
+ */
+
+/**
+ * A History class object keeps a date, and a historical course and the class provides the necessary getter and setter methods.
+ * 
+ */
 public class History {
 	private String date;
 	private double course;
