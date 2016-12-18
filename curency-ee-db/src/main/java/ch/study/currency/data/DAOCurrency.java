@@ -128,7 +128,14 @@ public class DAOCurrency {
 		}
 	}
 
-
+	/**
+	 * Returns a list (date, exchange course) with the historical exchange courses between two committed currencies. 
+	 * 
+	 * @param from 	base currency rate
+	 * @param to 	target currency rate
+	 *
+	 * @return List<History>  List with the historical exchange course and the corresponding date.
+	 */
 	public List<History> getHistory(String from, String to) throws ClassNotFoundException, SQLException, ParseException {
 		Connection con = this.connect();
 		List<History> historyList = new ArrayList<>();
@@ -148,6 +155,15 @@ public class DAOCurrency {
 		return historyList;
 	}
 	
+	/**
+	 * Returns a list (date, exchange course) with the historical exchange courses between two committed currencies. 
+	 * 
+	 * @param historyList 	Empty Arraylist to be filled with the collected historical data from the SQLITE database.
+	 * @param resultSet 	Collected historical data.
+	 * @param from 	base currency rate
+	 * @param to 	target currency rate
+	 *
+	 */
 	private void handleResultSet(List<History> historyList , ResultSet resultSet,String from, String to) throws SQLException{
 		History history = null;
 		double fromCourse = 0;
@@ -176,6 +192,14 @@ public class DAOCurrency {
 			}
 		}
 	}
+	
+	/**
+	 * Checks if the committed string is "EUR" and returns true if appropriate.
+	 * 
+	 * @param currency   currency string
+	 *
+	 * @return double    Returns true if string is "EUR".
+	 */
 	private double setCourse(String currency){
 		//Euro is all time 1
 		if(currency.equals("EUR")){
